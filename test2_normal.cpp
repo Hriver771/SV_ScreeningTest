@@ -89,12 +89,8 @@ int main()
 	cout << "result : " << result.left << "(left) " << result.right << "(right) " << result.sum << "(sum)" << endl;
 
 
-	//cout << "더하기 결과	: ";
-	//for (int i = 0; i < MaxSumList.size(); i++)
-	//{
-	//	cout << MaxSumList[i].sum << " ";
-	//}
-	//cout << endl;
+
+
 
 	return 0;
 }
