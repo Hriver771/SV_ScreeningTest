@@ -77,7 +77,7 @@ int GetMaxCost_Matrix(const vector<vector<int>> Cost)
 	return *max_element(maxCost_inRow.begin(), maxCost_inRow.end());
 }
 
-void step3(vector<vector<int>> Cost, int MatrixSize, vector<int> CoveredRow, vector<int> CoveredCol, vector<vector<bool>> StarZeros,
+void step3(vector<vector<int>> Cost, const int MatrixSize, vector<int> CoveredRow, vector<int> CoveredCol, vector<vector<bool>> StarZeros,
 	vector<vector<bool>> PrimeZeros)
 {
 	//step 3
@@ -155,10 +155,10 @@ void step4(vector<vector<int>> Cost, int MatrixSize, vector<int> CoveredRow, vec
 	step6(Cost, MatrixSize, CoveredRow, CoveredCol, StarZeros, PrimeZeros);
 }
 
-void PrimeCheck(int MatrixSize, vector<vector<bool>> StarZeros, vector<vector<bool>>PrimeZeros,
+void PrimeCheck(int MatrixSize, vector<vector<bool>> & StarZeros, vector<vector<bool>> PrimeZeros,
 	vector<vector<bool>> CopyStarZeros, vector<vector<bool>> CopyPrimeZeros, int I);
 
-void StarCheck(int MatrixSize, vector<vector<bool>> StarZeros, vector<vector<bool>>PrimeZeros,
+void StarCheck(int MatrixSize, vector<vector<bool>> & StarZeros, vector<vector<bool>> PrimeZeros,
 	vector<vector<bool>> CopyStarZeros, vector<vector<bool>> CopyPrimeZeros, int J )
 {
 	for (int i = 0; i < MatrixSize; i++)
@@ -169,14 +169,13 @@ void StarCheck(int MatrixSize, vector<vector<bool>> StarZeros, vector<vector<boo
 			cout << "@@@@ StarCheck @@@@" << endl;
 			PrintMatrixB(StarZeros);
 			PrimeCheck(MatrixSize, StarZeros, PrimeZeros, CopyStarZeros, CopyPrimeZeros, i);
-			
 			return;
 		}
 	}
 	return;
 }
 
-void PrimeCheck(int MatrixSize, vector<vector<bool>> StarZeros, vector<vector<bool>>PrimeZeros,
+void PrimeCheck(int MatrixSize, vector<vector<bool>>  & StarZeros, vector<vector<bool>> PrimeZeros,
 	vector<vector<bool>> CopyStarZeros, vector<vector<bool>> CopyPrimeZeros,  int I)
 {
 	for (int j = 0; j < MatrixSize; j++)
@@ -187,7 +186,6 @@ void PrimeCheck(int MatrixSize, vector<vector<bool>> StarZeros, vector<vector<bo
 			cout << "@@@@ Primecheck @@@@" << endl;
 			PrintMatrixB(StarZeros);
 			StarCheck(MatrixSize, StarZeros, PrimeZeros, CopyStarZeros, CopyPrimeZeros, j);
-			
 			return;
 		}
 	}
@@ -247,71 +245,6 @@ void step5(vector<vector<int>> Cost, int MatrixSize, vector<int> CoveredRow, vec
 		step3(Cost, MatrixSize, CoveredRow, CoveredCol, StarZeros, PrimeZeros);
 	}
 }
-
-//void step5(vector<vector<int>> Cost, int MatrixSize, vector<int> CoveredRow, vector<int> CoveredCol, vector<vector<bool>> StarZeros,
-//	vector<vector<bool>> PrimeZeros)
-//{
-//	vector<vector<bool>> CopyStarZeros = StarZeros;
-//	vector<vector<bool>> CopyPrimeZeros = PrimeZeros;
-//	bool NewZero = false;
-//	for (int i = 0; i < MatrixSize; i++)
-//	{
-//		for (int j = 0; j < MatrixSize; j++)
-//		{
-//			if (CopyPrimeZeros[i][j] == true)
-//			{
-//				for (int k = 0; k < MatrixSize; k++)
-//				{
-//					if (CopyStarZeros[i][k] == true)
-//					{
-//						break;
-//					}
-//					if (k + 1 == MatrixSize)
-//					{
-//						NewZero = true;
-//						StarZeros[i][j] = true;
-//					}
-//				}
-//			}
-//			if (NewZero == true)
-//			{
-//				for (int k = 0; k < MatrixSize; k++)
-//				{
-//					if (CopyStarZeros[k][j] == true)
-//					{
-//						StarZeros[k][j] == false;
-//						for (int l = 0; l < MatrixSize; l++)
-//						{
-//							if (CopyPrimeZeros[k][l] == true)
-//							{
-//								StarZeros[k][l] = true;
-//							}
-//						}
-//					}
-//				}
-//			}
-//		}
-//	}
-//	if (NewZero == false)
-//	{
-//		cout << "@@@@ 5 @@@@" << endl;
-//		PrintThings(Cost, MatrixSize, CoveredRow, CoveredCol, StarZeros, PrimeZeros);
-//		step6(Cost, MatrixSize, CoveredRow, CoveredCol, StarZeros, PrimeZeros);
-//	}
-//	else
-//	{
-//		CoveredCol.clear();
-//		CoveredRow.clear();
-//		for (int i = 0; i < MatrixSize; i++)
-//		{
-//			PrimeZeros[i].clear();
-//			PrimeZeros[i].assign(MatrixSize, false);
-//		}
-//		cout << "@@@@ 5 @@@@" << endl;
-//		PrintThings(Cost, MatrixSize, CoveredRow, CoveredCol, StarZeros, PrimeZeros);
-//		step3(Cost, MatrixSize, CoveredRow, CoveredCol, StarZeros, PrimeZeros);
-//	}
-//}
 
 void step6(vector<vector<int>> Cost, int MatrixSize, vector<int> CoveredRow, vector<int> CoveredCol, vector<vector<bool>> StarZeros,
 	vector<vector<bool>> PrimeZeros)
@@ -404,26 +337,10 @@ void HungarianAlgo(vector<vector<int>> Cost, const int N, const int M, const int
 	}
 	PrintMatrix(Cost);
 
-	////colum에서 가장 작은 값 빼주기
-	//for (int j = 0; j < matrixSize; j++)
-	//{
-	//	vector<int> colum;
-	//	for (vector<int> Row : Cost)
-	//	{
-	//		colum.push_back(Row[j]);
-	//	}
-	//	int minCost = *min_element(colum.begin(), colum.end());
-	//	for (int i = 0; i < matrixSize; i++)
-	//	{
-	//		Cost[i][j] -= minCost;
-	//	}
-	//}
-	//PrintMatrix(Cost);
-
 	vector<int> CoveredRow;
 	vector<int> CoveredCol;
 	vector<vector<bool>> StarZeros(MatrixSize, vector<bool>(MatrixSize, false));
-	vector<vector<bool>> PrimeZeros(Cost.size(), vector<bool>(Cost.size(), false));
+	vector<vector<bool>> PrimeZeros(Cost.size(), vector<bool>(MatrixSize, false));
 
 	//step 2
 	for (int i = 0; i < MatrixSize; i++)
@@ -446,6 +363,7 @@ void HungarianAlgo(vector<vector<int>> Cost, const int N, const int M, const int
 	PrintThings(Cost, MatrixSize, CoveredRow, CoveredCol, StarZeros, PrimeZeros);
 
 	step3(Cost, MatrixSize, CoveredRow, CoveredCol, StarZeros, PrimeZeros);
+	PrintThings(Cost, MatrixSize, CoveredRow, CoveredCol, StarZeros, PrimeZeros);
 	for (int i = 0; i < MatrixSize; i++)
 	{
 		for (int j = 0; j < MatrixSize; j++)
@@ -520,7 +438,5 @@ void main()
 		cout << index << " ";
 	}
 	cout << " }" << endl;
-
-
 
 }
