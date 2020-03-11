@@ -26,11 +26,6 @@ int main()
 	cout << "배열을 입력하세요 : ";
 	getline(cin, strInput);
 
-
-	//// 문자열 출력 지울 부분
-	//cout << "문자열	: " << strInput << endl;
-	////요것도
-
 	string strNum = "";
 	for (int i = 0; i < strInput.length(); i++)
 	{
@@ -46,17 +41,6 @@ int main()
 		}
 	}
 	OriginList.push_back(atoi(strNum.c_str()));
-
-	/////지울부분
-	//cout << "숫자	: ";
-	//for (int i = 0; i < OriginList.size(); i++)
-	//{
-	//	cout << OriginList[i] << " ";
-	//}
-	//cout << endl;
-	////여기까지
-
-
 
 	for (int i = 0; i < OriginList.size(); i++)
 	{
@@ -79,7 +63,10 @@ int main()
 
 	for (int i = 0; i < MaxSumList.size(); i++)
 	{
-		if (i == 0) result = MaxSumList[i];
+		if (i == 0)
+		{
+			result = MaxSumList[i];
+		}
 		if (result.sum < MaxSumList[i].sum)
 		{
 			result = MaxSumList[i];
@@ -87,10 +74,6 @@ int main()
 	}
 
 	cout << "result : " << result.left << "(left) " << result.right << "(right) " << result.sum << "(sum)" << endl;
-
-
-
-
 
 	return 0;
 }
