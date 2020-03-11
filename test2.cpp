@@ -84,19 +84,19 @@ void Divide_N_Conquer(const vector<int> OriginList, MaxSum& Root)
 			Root.left = Left.left;
 			Root.right = Right.right;
 			Root.sum = Left.sum + Right.sum;
-			//cout << "result1.1 : " << Root.left << "(left) " << Root.right << "(right) " << Root.sum << "(sum)" << pivot << "(pivot)" << endl;
+			cout << "result1.1 : " << Root.left << "(left) " << Root.right << "(right) " << Root.sum << "(sum)" << pivot << "(pivot)" << endl;
 			return;
 		}
 		else if (Left.sum >= Right.sum)
 		{
 			Root = Left;
-			//cout << "result1.2 : " << Root.left << "(left) " << Root.right << "(right) " << Root.sum << "(sum)" << pivot << "(pivot)" << endl;
+			cout << "result1.2 : " << Root.left << "(left) " << Root.right << "(right) " << Root.sum << "(sum)" << pivot << "(pivot)" << endl;
 			return;
 		}
 		else
 		{
 			Root = Right;
-			//cout << "result1.3 : " << Root.left << "(left) " << Root.right << "(right) " << Root.sum << "(sum)" << pivot << "(pivot)" << endl;
+			cout << "result1.3 : " << Root.left << "(left) " << Root.right << "(right) " << Root.sum << "(sum)" << pivot << "(pivot)" << endl;
 			return;
 		}
 	}
@@ -113,28 +113,75 @@ void Divide_N_Conquer(const vector<int> OriginList, MaxSum& Root)
 				Left.sum = tmpsum;
 			}
 		}
-		if (Left.right + 1 == Right.left || Left.right >= Right.left)
+		if (Left.right == Right.right)
 		{
-			Root.left = Left.left;
-			Root.right = Right.right;
-			Root.sum = 0;
-			for (int i = Root.left; i <= Root.right; i++)
+			if (Left.sum >= Right.sum)
 			{
-				Root.sum += OriginList[i - 1];
+				Root = Left;
+				cout << "result2.0(left) : " << Root.left << "(left) " << Root.right << "(right) " << Root.sum << "(sum)" << pivot << "(pivot)" << endl;
+				return;
 			}
-			//cout << "result2.1 : " << Root.left << "(left) " << Root.right << "(right) " << Root.sum << "(sum)" << pivot << "(pivot)" << endl;
+			else
+			{
+				Root = Right;
+				cout << "result2.0(left) : " << Root.left << "(left) " << Root.right << "(right) " << Root.sum << "(sum)" << pivot << "(pivot)" << endl;
+				return;
+			}
+		}
+		else if (Left.right >= Right.left - 1)
+		{
+			Root = Left;
+			cout << "result2.1(left) : " << Root.left << "(left) " << Root.right << "(right) " << Root.sum << "(sum)" << pivot << "(pivot)" << endl;
 			return;
 		}
+		//if (Left.right >= Right.left)
+		//{
+		//	Root.left = Left.left;
+		//	Root.right = Right.right;
+		//	Root.sum = 0;
+		//	for (int i = Root.left; i <= Root.right; i++)
+		//	{
+		//		Root.sum += OriginList[i - 1];
+		//	}
+		//	cout << "case2.left.1" << endl;
+		//	//cout << "result2.1 : " << Root.left << "(left) " << Root.right << "(right) " << Root.sum << "(sum)" << pivot << "(pivot)" << endl;
+		//	return;
+		//}
+		//else if (Left.right + 1 == Right.left)
+		//{
+		//	if (Left.sum < 0)
+		//	{
+		//		Root = Right;
+		//		cout << "case2.left.2" << endl;
+		//		return;
+		//	}
+		//	else if (Right.sum < 0)
+		//	{
+		//		Root = Left;
+		//		cout << "case2.left.2" << endl;
+		//		return;
+		//	}
+		//	else
+		//	{
+		//		Root.left = Left.left;
+		//		Root.right = Right.right;
+		//		Root.sum = Left.sum + Right.sum;
+		//		cout << "case2.left.2" << endl;
+		//		return;
+		//	}
+		//}
 		else if (Left.sum >= Right.sum)
 		{
 			Root = Left;
-			//cout << "result2.2 : " << Root.left << "(left) " << Root.right << "(right) " << Root.sum << "(sum)" << pivot << "(pivot)" << endl;
+			//cout << "case2.left.3" << endl;
+			cout << "result2.2(left) : " << Root.left << "(left) " << Root.right << "(right) " << Root.sum << "(sum)" << pivot << "(pivot)" << endl;
 			return;
 		}
 		else
 		{
 			Root = Right;
-			//cout << "result2.3 : " << Root.left << "(left) " << Root.right << "(right) " << Root.sum << "(sum)" << pivot << "(pivot)" << endl;
+			//cout << "case2.left.4" << endl;
+			cout << "result2.3(left) : " << Root.left << "(left) " << Root.right << "(right) " << Root.sum << "(sum)" << pivot << "(pivot)" << endl;
 			return;
 		}
 	}
@@ -151,44 +198,110 @@ void Divide_N_Conquer(const vector<int> OriginList, MaxSum& Root)
 				Right.sum = tmpsum;
 			}
 		}
-		if (Left.right + 1 == Right.left || Left.right >= Right.left)
+		if (Left.left == Right.left)
 		{
-			Root.left = Left.left;
-			Root.right = Right.right;
-			Root.sum = 0;
-			for (int i = Root.left; i <= Root.right; i++)
+			if (Left.sum >= Right.sum)
 			{
-				Root.sum += OriginList[i - 1];
+				Root = Left;
+				cout << "result2.0(right) : " << Root.left << "(left) " << Root.right << "(right) " << Root.sum << "(sum)" << pivot << "(pivot)" << endl;
+				return;
 			}
-			//cout << "result2.1 : " << Root.left << "(left) " << Root.right << "(right) " << Root.sum << "(sum)" << pivot << "(pivot)" << endl;
+			else
+			{
+				Root = Right;
+				cout << "result2.0(right) : " << Root.left << "(left) " << Root.right << "(right) " << Root.sum << "(sum)" << pivot << "(pivot)" << endl;
+				return;
+			}
+		}
+		else if (Left.right >= Right.left - 1)
+		{
+			Root = Right;
+			cout << "result2.1(right) : " << Root.left << "(left) " << Root.right << "(right) " << Root.sum << "(sum)" << pivot << "(pivot)" << endl;
 			return;
 		}
+		//{
+		//	Root.left = Left.left;
+		//	Root.right = Right.right;
+		//	Root.sum = 0;
+		//	for (int i = Root.left; i <= Root.right; i++)
+		//	{
+		//		Root.sum += OriginList[i - 1];
+		//	}
+		//	cout << "case2.right.1" << endl;
+		//	//cout << "result2.1 : " << Root.left << "(left) " << Root.right << "(right) " << Root.sum << "(sum)" << pivot << "(pivot)" << endl;
+		//	return;
+		//}
+		//else if (Left.right + 1 == Right.left)
+		//{
+		//	if (Left.sum < 0)
+		//	{
+		//		Root = Right;
+		//		cout << "case2.right.2" << endl;
+		//		return;
+		//	}
+		//	else if (Right.sum < 0)
+		//	{
+		//		Root = Left;
+		//		cout << "case2.right.2" << endl;
+		//		return;
+		//	}
+		//	else
+		//	{
+		//		Root.left = Left.left;
+		//		Root.right = Right.right;
+		//		Root.sum = Left.sum + Right.sum;
+		//		cout << "case2.right.2" << endl;
+		//		return;
+		//	}
+		//}
 		else if (Left.sum >= Right.sum)
 		{
 			Root = Left;
-			//cout << "result2.2 : " << Root.left << "(left) " << Root.right << "(right) " << Root.sum << "(sum)" << pivot << "(pivot)" << endl;
+			//cout << "case2.right.3" << endl;
+			cout << "result2.2(right) : " << Root.left << "(left) " << Root.right << "(right) " << Root.sum << "(sum)" << pivot << "(pivot)" << endl;
 			return;
 		}
 		else
 		{
 			Root = Right;
-			//cout << "result2.3 : " << Root.left << "(left) " << Root.right << "(right) " << Root.sum << "(sum)" << pivot << "(pivot)" << endl;
+			//cout << "case2.right.4" << endl;
+			cout << "result2.3(right) : " << Root.left << "(left) " << Root.right << "(right) " << Root.sum << "(sum)" << pivot << "(pivot)" << endl;
 			return;
 		}
 	}
 	//case3
 	else
 	{
-		if (Left.sum >= Right.sum)
+		if (Left.sum == Right.sum)
+		{
+			cout << "@@@@ case3 same @@@@" << endl;
+		}
+		int tmpsum = Left.sum;
+		for (int i = Left.right + 1; i < Right.right; i++)
+		{
+			tmpsum += OriginList[i - 1];
+		}
+		tmpsum += Right.sum;
+		if (tmpsum > Left.sum && tmpsum > Right.sum)
+		{
+			Root.left = Left.left;
+			Root.right = Right.right;
+			Root.sum = tmpsum;
+			cout << "result3.0 : " << Root.left << "(left) " << Root.right << "(right) " << Root.sum << "(sum)" << pivot << "(pivot)" << endl;
+			return;
+		}
+		else if (Left.sum >= Right.sum)
 		{
 			Root = Left;
-			//cout << "result3.1 : " << Root.left << "(left) " << Root.right << "(right) " << Root.sum << "(sum)" << pivot << "(pivot)" << endl;
+			//cout << "case3.1" << endl;
+			cout << "result3.1 : " << Root.left << "(left) " << Root.right << "(right) " << Root.sum << "(sum)" << pivot << "(pivot)" << endl;
 			return;
 		}
 		else
 		{
 			Root = Right;
-			//cout << "result3.2 : " << Root.left << "(left) " << Root.right << "(right) " << Root.sum << "(sum)" << pivot << "(pivot)" << endl;
+			//cout << "case3.2" << endl;
+			cout << "result3.2 : " << Root.left << "(left) " << Root.right << "(right) " << Root.sum << "(sum)" << pivot << "(pivot)" << endl;
 			return;
 		}
 
@@ -223,11 +336,13 @@ int main()
 	//OriginList.push_back(atoi(strNum.c_str()));
 
 	srand(static_cast<unsigned int>(time(NULL)));
-	for (int count = 1; count <= 100; ++count)
+	for (int count = 1; count <= 20; ++count)
 	{
-		OriginList.push_back(rand() % 500 - 250);
+		int n = rand() % 300 - 150;
+		OriginList.push_back(n);
+		cout << n << " ";
 	}
-
+	cout << endl;
 
 	ResultMaxSumDC.left = 1;
 	ResultMaxSumDC.right = OriginList.size();
