@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <time.h>
 using namespace std;
 
 typedef struct MaxSum
@@ -202,24 +203,31 @@ int main()
 	MaxSum ResultMaxSumDC;
 	MaxSum ResultMaxSumBF;
 
-	cout << "배열을 입력하세요 : ";
-	getline(cin, strInput);
+	//cout << "배열을 입력하세요 : ";
+	//getline(cin, strInput);
 
-	string strNum = "";
-	for (int i = 0; i < strInput.length(); i++)
+	//string strNum = "";
+	//for (int i = 0; i < strInput.length(); i++)
+	//{
+	//	if (strInput.at(i) == ' ')
+	//	{
+	//		OriginList.push_back(atoi(strNum.c_str()));
+	//		strNum = "";
+	//	}
+	//	else
+	//	{
+	//		strNum += strInput.at(i);
+	//		continue;
+	//	}
+	//}
+	//OriginList.push_back(atoi(strNum.c_str()));
+
+	srand(static_cast<unsigned int>(time(NULL)));
+	for (int count = 1; count <= 100; ++count)
 	{
-		if (strInput.at(i) == ' ')
-		{
-			OriginList.push_back(atoi(strNum.c_str()));
-			strNum = "";
-		}
-		else
-		{
-			strNum += strInput.at(i);
-			continue;
-		}
+		OriginList.push_back(rand() % 500 - 250);
 	}
-	OriginList.push_back(atoi(strNum.c_str()));
+
 
 	ResultMaxSumDC.left = 1;
 	ResultMaxSumDC.right = OriginList.size();
@@ -227,5 +235,7 @@ int main()
 	cout << "Divide and Conquer result : " << ResultMaxSumDC.left << "(left) " << ResultMaxSumDC.right << "(right) " << ResultMaxSumDC.sum << "(sum)" << endl;
 	Brute_Force(OriginList, ResultMaxSumBF);
 	cout << "Brute Force result : " << ResultMaxSumBF.left << "(left) " << ResultMaxSumBF.right << "(right) " << ResultMaxSumBF.sum << "(sum)" << endl;
+
+
 	return 0;
 }
