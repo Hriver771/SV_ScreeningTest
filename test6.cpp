@@ -96,15 +96,15 @@ void step3(vector<vector<int>> Cost, const int MatrixSize, vector<int> CoveredRo
 	CoveredCol.erase(unique(CoveredCol.begin(), CoveredCol.end()), CoveredCol.end());
 	if (CoveredCol.size() == MatrixSize)
 	{
-		cout << "@@@@ 3 @@@@" << endl;
-		PrintThings(Cost, MatrixSize, CoveredRow, CoveredCol, StarZeros, PrimeZeros);
+		/*cout << "@@@@ 3 @@@@" << endl;
+		PrintThings(Cost, MatrixSize, CoveredRow, CoveredCol, StarZeros, PrimeZeros);*/
 		//Á¾·á
 		return;
 	}
 	else
 	{
-		cout << "@@@@ 3 @@@@" << endl;
-		PrintThings(Cost, MatrixSize, CoveredRow, CoveredCol, StarZeros, PrimeZeros);
+		/*cout << "@@@@ 3 @@@@" << endl;
+		PrintThings(Cost, MatrixSize, CoveredRow, CoveredCol, StarZeros, PrimeZeros);*/
 		step4(Cost, MatrixSize, CoveredRow, CoveredCol, StarZeros, PrimeZeros);
 	}
 }
@@ -132,8 +132,8 @@ void step4(vector<vector<int>> Cost, int MatrixSize, vector<int> CoveredRow, vec
 
 						if (iterStarRow == StarZeros[i].end())
 						{
-							cout << "@@@@ 4 @@@@" << endl;
-							PrintThings(Cost, MatrixSize, CoveredRow, CoveredCol, StarZeros, PrimeZeros);
+							/*cout << "@@@@ 4 @@@@" << endl;
+							PrintThings(Cost, MatrixSize, CoveredRow, CoveredCol, StarZeros, PrimeZeros);*/
 							step5(Cost, MatrixSize, CoveredRow, CoveredCol, StarZeros, PrimeZeros);
 							return;
 						}
@@ -151,8 +151,8 @@ void step4(vector<vector<int>> Cost, int MatrixSize, vector<int> CoveredRow, vec
 			}
 		}
 	}
-	cout << "@@@@ 4 @@@@" << endl;
-	PrintThings(Cost, MatrixSize, CoveredRow, CoveredCol, StarZeros, PrimeZeros);
+	/*cout << "@@@@ 4 @@@@" << endl;
+	PrintThings(Cost, MatrixSize, CoveredRow, CoveredCol, StarZeros, PrimeZeros);*/
 	step6(Cost, MatrixSize, CoveredRow, CoveredCol, StarZeros, PrimeZeros);
 }
 
@@ -167,8 +167,8 @@ void StarCheck(int MatrixSize, vector<vector<bool>> & StarZeros, vector<vector<b
 		if (CopyStarZeros[i][J] == true)
 		{
 			StarZeros[i][J] = false;
-			cout << "@@@@ StarCheck @@@@" << endl;
-			PrintMatrixB(StarZeros);
+			/*cout << "@@@@ StarCheck @@@@" << endl;
+			PrintMatrixB(StarZeros);*/
 			PrimeCheck(MatrixSize, StarZeros, PrimeZeros, CopyStarZeros, CopyPrimeZeros, i);
 			return;
 		}
@@ -184,8 +184,8 @@ void PrimeCheck(int MatrixSize, vector<vector<bool>>  & StarZeros, vector<vector
 		if (CopyPrimeZeros[I][j] == true)
 		{
 			StarZeros[I][j] = true;
-			cout << "@@@@ Primecheck @@@@" << endl;
-			PrintMatrixB(StarZeros);
+			/*cout << "@@@@ Primecheck @@@@" << endl;
+			PrintMatrixB(StarZeros);*/
 			StarCheck(MatrixSize, StarZeros, PrimeZeros, CopyStarZeros, CopyPrimeZeros, j);
 			return;
 		}
@@ -227,8 +227,8 @@ void step5(vector<vector<int>> Cost, int MatrixSize, vector<int> CoveredRow, vec
 	}
 	if (NewZero == false)
 	{
-		cout << "@@@@ 5 @@@@" << endl;
-		PrintThings(Cost, MatrixSize, CoveredRow, CoveredCol, StarZeros, PrimeZeros);
+		/*cout << "@@@@ 5 @@@@" << endl;
+		PrintThings(Cost, MatrixSize, CoveredRow, CoveredCol, StarZeros, PrimeZeros);*/
 		step6(Cost, MatrixSize, CoveredRow, CoveredCol, StarZeros, PrimeZeros);
 	}
 	else
@@ -241,8 +241,8 @@ void step5(vector<vector<int>> Cost, int MatrixSize, vector<int> CoveredRow, vec
 			PrimeZeros[i].clear();
 			PrimeZeros[i].assign(MatrixSize, false);
 		}
-		cout << "@@@@ 5 @@@@" << endl;
-		PrintThings(Cost, MatrixSize, CoveredRow, CoveredCol, StarZeros, PrimeZeros);
+		/*cout << "@@@@ 5 @@@@" << endl;
+		PrintThings(Cost, MatrixSize, CoveredRow, CoveredCol, StarZeros, PrimeZeros);*/
 		step3(Cost, MatrixSize, CoveredRow, CoveredCol, StarZeros, PrimeZeros);
 	}
 }
@@ -295,8 +295,8 @@ void step6(vector<vector<int>> Cost, int MatrixSize, vector<int> CoveredRow, vec
 		}
 
 	}
-	cout << "@@@@ 6 @@@@" << endl;
-	PrintThings(Cost, MatrixSize, CoveredRow, CoveredCol, StarZeros, PrimeZeros);
+	/*cout << "@@@@ 6 @@@@" << endl;
+	PrintThings(Cost, MatrixSize, CoveredRow, CoveredCol, StarZeros, PrimeZeros);*/
 	step4(Cost, MatrixSize, CoveredRow, CoveredCol, StarZeros, PrimeZeros);
 }
 
@@ -339,7 +339,7 @@ void HungarianAlgo(vector<vector<int>> Cost, const int N, const int M, const int
 			}
 		}
 	}
-	PrintMatrix(Cost);
+	/*PrintMatrix(Cost);*/
 
 	int MatrixSize = Cost.size();
 
@@ -352,7 +352,7 @@ void HungarianAlgo(vector<vector<int>> Cost, const int N, const int M, const int
 			Cost[i][j] -= minCost;
 		}
 	}
-	PrintMatrix(Cost);
+	/*PrintMatrix(Cost);*/
 
 	vector<int> CoveredRow;
 	vector<int> CoveredCol;
@@ -377,10 +377,10 @@ void HungarianAlgo(vector<vector<int>> Cost, const int N, const int M, const int
 			break;
 		}
 	}
-	PrintThings(Cost, MatrixSize, CoveredRow, CoveredCol, StarZeros, PrimeZeros);
+	/*PrintThings(Cost, MatrixSize, CoveredRow, CoveredCol, StarZeros, PrimeZeros);*/
 
 	step3(Cost, MatrixSize, CoveredRow, CoveredCol, StarZeros, PrimeZeros);
-	PrintThings(Cost, MatrixSize, CoveredRow, CoveredCol, StarZeros, PrimeZeros);
+	/*PrintThings(Cost, MatrixSize, CoveredRow, CoveredCol, StarZeros, PrimeZeros);*/
 	TotalCost = 0;
 	for (int i = 0; i < N; i++)
 	{
