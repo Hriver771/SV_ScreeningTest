@@ -6,12 +6,13 @@
 using namespace std;
 
 
-
-void step4(vector<vector<int>> Cost, int MatrixSize, vector<int> CoveredRow, vector<int> CoveredCol, vector<vector<bool>> StarZeros,
+void step3(vector<vector<int>> Cost, const int MatrixSize, vector<int> CoveredRow, vector<int> CoveredCol, vector<vector<bool>> & StarZeros,
 	vector<vector<bool>> PrimeZeros);
-void step5(vector<vector<int>> Cost, int MatrixSize, vector<int> CoveredRow, vector<int> CoveredCol, vector<vector<bool>> StarZeros,
+void step4(vector<vector<int>> Cost, const int MatrixSize, vector<int> CoveredRow, vector<int> CoveredCol, vector<vector<bool>> & StarZeros,
 	vector<vector<bool>> PrimeZeros);
-void step6(vector<vector<int>> Cost, int MatrixSize, vector<int> CoveredRow, vector<int> CoveredCol, vector<vector<bool>> StarZeros,
+void step5(vector<vector<int>> Cost, const int MatrixSize, vector<int> CoveredRow, vector<int> CoveredCol, vector<vector<bool>> & StarZeros,
+	vector<vector<bool>> PrimeZeros);
+void step6(vector<vector<int>> Cost, const int MatrixSize, vector<int> CoveredRow, vector<int> CoveredCol, vector<vector<bool>> & StarZeros,
 	vector<vector<bool>> PrimeZeros);
 
 
@@ -77,7 +78,7 @@ int GetMaxCost_Matrix(const vector<vector<int>> Cost)
 	return *max_element(maxCost_inRow.begin(), maxCost_inRow.end());
 }
 
-void step3(vector<vector<int>> Cost, const int MatrixSize, vector<int> CoveredRow, vector<int> CoveredCol, vector<vector<bool>> StarZeros,
+void step3(vector<vector<int>> Cost, const int MatrixSize, vector<int> CoveredRow, vector<int> CoveredCol, vector<vector<bool>> & StarZeros,
 	vector<vector<bool>> PrimeZeros)
 {
 	//step 3
@@ -108,7 +109,7 @@ void step3(vector<vector<int>> Cost, const int MatrixSize, vector<int> CoveredRo
 	}
 }
 
-void step4(vector<vector<int>> Cost, int MatrixSize, vector<int> CoveredRow, vector<int> CoveredCol, vector<vector<bool>> StarZeros,
+void step4(vector<vector<int>> Cost, int MatrixSize, vector<int> CoveredRow, vector<int> CoveredCol, vector<vector<bool>> & StarZeros,
 	vector<vector<bool>> PrimeZeros)
 {
 	//step 4
@@ -193,7 +194,7 @@ void PrimeCheck(int MatrixSize, vector<vector<bool>>  & StarZeros, vector<vector
 	return;
 }
 
-void step5(vector<vector<int>> Cost, int MatrixSize, vector<int> CoveredRow, vector<int> CoveredCol, vector<vector<bool>> StarZeros,
+void step5(vector<vector<int>> Cost, int MatrixSize, vector<int> CoveredRow, vector<int> CoveredCol, vector<vector<bool>> & StarZeros,
 	vector<vector<bool>> PrimeZeros)
 {
 	vector<vector<bool>> CopyStarZeros = StarZeros;
@@ -246,7 +247,7 @@ void step5(vector<vector<int>> Cost, int MatrixSize, vector<int> CoveredRow, vec
 	}
 }
 
-void step6(vector<vector<int>> Cost, int MatrixSize, vector<int> CoveredRow, vector<int> CoveredCol, vector<vector<bool>> StarZeros,
+void step6(vector<vector<int>> Cost, int MatrixSize, vector<int> CoveredRow, vector<int> CoveredCol, vector<vector<bool>> & StarZeros,
 	vector<vector<bool>> PrimeZeros)
 {
 	//6단계
@@ -299,8 +300,24 @@ void step6(vector<vector<int>> Cost, int MatrixSize, vector<int> CoveredRow, vec
 	step4(Cost, MatrixSize, CoveredRow, CoveredCol, StarZeros, PrimeZeros);
 }
 
-void HungarianAlgo(vector<vector<int>> Cost, const int N, const int M, const int Mode, int & TotalCost, vector<int> AssignmentIndex)
+void HungarianAlgo(vector<vector<int>> Cost, const int N, const int M, const int Mode, int & TotalCost, vector<int> & AssignmentIndex)
 {
+	vector<vector<int>> OriginCost = Cost;
+	AssignmentIndex.clear();
+
+	//Mode1일떄
+	if (Mode == 1)
+	{
+		int maxnum = GetMaxCost_Matrix(Cost);
+		for (int i = 0; i < N; i++)
+		{
+			for (int j = 0; j < M; j++)
+			{
+				Cost[i][j] = maxnum - Cost[i][j];
+			}
+		}
+	}
+
 	//정방향으로 만들기
 	if (N < M)
 	{
@@ -364,12 +381,14 @@ void HungarianAlgo(vector<vector<int>> Cost, const int N, const int M, const int
 
 	step3(Cost, MatrixSize, CoveredRow, CoveredCol, StarZeros, PrimeZeros);
 	PrintThings(Cost, MatrixSize, CoveredRow, CoveredCol, StarZeros, PrimeZeros);
-	for (int i = 0; i < MatrixSize; i++)
+	TotalCost = 0;
+	for (int i = 0; i < N; i++)
 	{
-		for (int j = 0; j < MatrixSize; j++)
+		for (int j = 0; j < M; j++)
 		{
 			if (StarZeros[i][j] == true)
 			{
+				TotalCost += OriginCost[i][j];
 				AssignmentIndex.push_back(j);
 			}
 		}
@@ -432,11 +451,22 @@ void main()
 
 	Mode = 0;
 	HungarianAlgo(OriginMatrix, N, M, Mode, TotalCost, AssignmentIndex);
-	cout << "AssignmentIndex : { ";
+	cout << "Mode : " << Mode << " / Total Cost : " << TotalCost;
+	cout << " / AssignmentIndex : { ";
 	for (int index : AssignmentIndex)
 	{
 		cout << index << " ";
 	}
-	cout << " }" << endl;
+	cout << "}" << endl;
+
+	Mode = 1;
+	HungarianAlgo(OriginMatrix, N, M, Mode, TotalCost, AssignmentIndex);
+	cout << "Mode : " << Mode << " / Total Cost : " << TotalCost;
+	cout << " / AssignmentIndex : { ";
+	for (int index : AssignmentIndex)
+	{
+		cout << index << " ";
+	}
+	cout << "}" << endl;
 
 }

@@ -169,7 +169,7 @@ int main()
 
 	srand(static_cast<unsigned int>(time(NULL)));
 
-	n = 10000;
+	n = 1000;
 	for (int count = 1; count <= n; ++count)
 	{
 		int n = rand() % 500 - 250;
