@@ -123,22 +123,7 @@ void Divide_N_Conquer(const vector<int> OriginList, MaxSum& Root)
 				Right.sum = tmpsum;
 			}
 		}
-		if (Left.right == Right.right || Left.left == Right.left)
-		{
-			if (Left.sum >= Right.sum)
-			{
-				Root = Left;
-				//cout << "result2.1 : " << Root.left << "(left) " << Root.right << "(right) " << Root.sum << "(sum)" << pivot << "(pivot)" << endl;
-				return;
-			}
-			else
-			{
-				Root = Right;
-				//cout << "result2.1 : " << Root.left << "(left) " << Root.right << "(right) " << Root.sum << "(sum)" << pivot << "(pivot)" << endl;
-				return;
-			}
-		}
-		else if (Left.sum >= Right.sum)
+		if (Left.sum >= Right.sum)
 				{
 					Root = Left;
 					//cout << "result2.3 : " << Root.left << "(left) " << Root.right << "(right) " << Root.sum << "(sum)" << pivot << "(pivot)" << endl;
@@ -178,26 +163,31 @@ int main()
 	//		strNum += strInput.at(i);
 	//		continue;
 	//	}
+
 	//}
 	//OriginList.push_back(atoi(strNum.c_str()));
 
 	srand(static_cast<unsigned int>(time(NULL)));
 
-	n = 1000;
+	n = 10000;
 	for (int count = 1; count <= n; ++count)
 	{
-		int n = rand() % 300 - 150;
+		int n = rand() % 500 - 250;
 		OriginList.push_back(n);
-		cout << n << " ";
+		//cout << n << " ";
 	}
-	cout << endl;
-
+	//cout << endl;
+	cout << n << " sequence" << endl;
 	ResultMaxSumDC.left = 1;
 	ResultMaxSumDC.right = OriginList.size();
+	clock_t s = (int)clock();
 	Divide_N_Conquer(OriginList, ResultMaxSumDC);
-	cout << "Divide and Conquer result : " << ResultMaxSumDC.left << "(left) " << ResultMaxSumDC.right << "(right) " << ResultMaxSumDC.sum << "(sum)" << endl;
+	float DCTime = (float)(clock() - s) / CLOCKS_PER_SEC;
+	cout << "Divide and Conquer result (" << DCTime << "s) : " << ResultMaxSumDC.left << "(left) " << ResultMaxSumDC.right << "(right) " << ResultMaxSumDC.sum << "(sum)" << endl;
+	s = (int)clock();
 	Brute_Force(OriginList, ResultMaxSumBF);
-	cout << "Brute Force result : " << ResultMaxSumBF.left << "(left) " << ResultMaxSumBF.right << "(right) " << ResultMaxSumBF.sum << "(sum)" << endl;
+	float BFTime = (float)(clock() - s) / CLOCKS_PER_SEC;
+	cout << "Brute Force result (" << BFTime << "s) : " << ResultMaxSumBF.left << "(left) " << ResultMaxSumBF.right << "(right) " << ResultMaxSumBF.sum << "(sum)" << endl;
 
 
 	return 0;
